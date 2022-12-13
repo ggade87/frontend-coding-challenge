@@ -2,10 +2,10 @@ import React, { useState, useEffect } from 'react';
 import Employees from './components/Employees';
 import Pagination from './components/Pagination';
 import './App.css';
-import { getAbsenceData, getAbsenceTypes } from './api/api';
+import { getAbsenceData, getAbsenceTypes } from './api/api.ts';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import {formatDate}  from './components/lib/Common';
+import {formatDate}  from './components/lib/Common.ts';
 const App = () => {
   const [selectedDate, setSelectedDate] = useState(null);
   const [employees, setEmployees] = useState([]);
@@ -65,7 +65,7 @@ const App = () => {
     }
 
     if(selectedDate != null){
-        let date = formatDate(selectedDate);
+        var date = formatDate(selectedDate);
         data = data.filter(x => x.startDate <= date && x.endDate >= date);
     }
     setEmployees(data);
@@ -77,8 +77,9 @@ const App = () => {
 
   return (
     <div className='container mt-5'>
-      <h1 className='text-primary mb-3'>Employees</h1>
+      <h1 className='text-primary mb-3'  >Employees</h1>
       <table>
+        <thead>
         <tr>
           <td>Absence Types</td><td>
             <select
@@ -99,6 +100,8 @@ const App = () => {
           </td>
           <td><button onClick={Search} >Search</button></td>
         </tr>
+        </thead> 
+        <tbody></tbody>
       </table>
 
       {employees.length == 0 ? ("Records not found.") : (
